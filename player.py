@@ -239,7 +239,7 @@ class MyPlayer2(Player):
         return holes
 
     def score_board(self, board):
-        score = 2000
+        score = 200000
         bumpiness = 0
         holes = 0
         height = 0
@@ -267,17 +267,13 @@ class MyPlayer2(Player):
         height = 23 - max_height
         for i in range(9):    
             bumpiness += (abs(heights[i] - heights[i+1]))
-        score = score - ((holes*60) + (height*12) + (bumpiness*10) + (horizontal_dislocations*0))
-        if max_height<8:
-            score = score - ((holes*20) + (height*20) + (bumpiness*10) + (horizontal_dislocations*0))
+        score = score - ((holes*60) + (height*12) + (bumpiness*3) + (horizontal_dislocations*0))
+        if max_height<10:
+            score = score - ((holes*400) + (height*20) + (bumpiness*12) + (horizontal_dislocations*0))
         print(holes)
         print(score)
         return score
     
-    # def check_i(self, board):
-    #     for i in range(10):
-    #         for j in range
-
     def move_to_target_pos(self, target_pos, target_rot, board):
         le_moves = []
         l_block_start_pos = 10
@@ -362,7 +358,7 @@ class MyPlayer2(Player):
 
     def choose_action(self, board):
         self.print_board(board)
-        time.sleep(0.02)
+        time.sleep(0.002)
         target_positions = []
         target_rotations = [1 ,2, 3, 4]
         actions_to_take = []
