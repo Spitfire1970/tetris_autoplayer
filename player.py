@@ -267,9 +267,9 @@ class MyPlayer2(Player):
         height = 23 - max_height
         for i in range(9):    
             bumpiness += (abs(heights[i] - heights[i+1]))
-        score = score - ((holes*60) + (height*12) + (bumpiness*3) + (horizontal_dislocations*0))
+        score = score - ((holes*60) + (height*12) + (bumpiness*5) + (horizontal_dislocations*0))
         if max_height<10:
-            score = score - ((holes*400) + (height*20) + (bumpiness*12) + (horizontal_dislocations*0))
+            score = score - ((holes*40) + (height*20) + (bumpiness*12) + (horizontal_dislocations*0))
         print(holes)
         print(score)
         return score
