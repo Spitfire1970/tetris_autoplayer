@@ -239,7 +239,7 @@ class MyPlayer2(Player):
         return holes
 
     def score_board(self, board):
-        score = 200000
+        score = 5000
         bumpiness = 0
         holes = 0
         height = 0
@@ -267,11 +267,14 @@ class MyPlayer2(Player):
         height = 23 - max_height
         for i in range(9):    
             bumpiness += (abs(heights[i] - heights[i+1]))
-        score = score - ((holes*60) + (height*12) + (bumpiness*5) + (horizontal_dislocations*0))
-        if max_height<10:
-            score = score - ((holes*40) + (height*20) + (bumpiness*12) + (horizontal_dislocations*0))
-        print(holes)
-        print(score)
+        if max_height<17:
+            score = score - ((holes*100) + (height*1) + (bumpiness*30) + (horizontal_dislocations*0))
+        else:
+            score = score - ((holes*100) + (height*1) + (bumpiness*4) + (horizontal_dislocations*0))
+        print("Height:",height)
+        print("Bumpiness:",bumpiness)
+        print("Holes:",holes)
+        print("Score:",score,"\n")
         return score
     
     def move_to_target_pos(self, target_pos, target_rot, board):
@@ -288,7 +291,7 @@ class MyPlayer2(Player):
             while True:
                 le_moves.append(Direction.Left)
                 if board.move(Direction.Left):
-                    print(board.cells)
+                    # print(board.cells)
                     return le_moves
                 l_block_start_pos -=1
                 if l_block_start_pos == target_pos[0]:
@@ -297,7 +300,7 @@ class MyPlayer2(Player):
             while True:
                 le_moves.append(Direction.Right)
                 if board.move(Direction.Right):
-                    print(board.cells)
+                    # print(board.cells)
                     return le_moves
                 r_block_start_pos+=1
                 l_block_start_pos+=1
@@ -307,12 +310,12 @@ class MyPlayer2(Player):
             for i in range(target_rot-1):
                 le_moves.append(Rotation.Clockwise)
                 if board.rotate(Rotation.Clockwise):
-                    print(board.cells)
+                    # print(board.cells)
                     return le_moves
 
         le_moves.append(Direction.Drop)
         board.move(Direction.Drop) 
-        print(board.cells)
+        # print(board.cells)
         return le_moves
 
     def move_to_target_rot(self, target_rot, target_pos, board):
@@ -321,7 +324,7 @@ class MyPlayer2(Player):
             for i in range(target_rot-1):
                 le_moves.append(Rotation.Clockwise)
                 if board.rotate(Rotation.Clockwise):
-                    print(board.cells)
+                    # print(board.cells)
                     return le_moves
         l_block_start_pos = 10
         for cell in board.falling.cells:
@@ -335,7 +338,7 @@ class MyPlayer2(Player):
             while True:
                 le_moves.append(Direction.Left)
                 if board.move(Direction.Left):
-                    print(board.cells)
+                    # print(board.cells)
                     return le_moves
                 l_block_start_pos -=1
                 if l_block_start_pos == target_pos[0]:
@@ -344,7 +347,7 @@ class MyPlayer2(Player):
             while True:
                 le_moves.append(Direction.Right)
                 if board.move(Direction.Right):
-                    print(board.cells)
+                    # print(board.cells)
                     return le_moves
                 r_block_start_pos+=1
                 l_block_start_pos+=1
@@ -353,12 +356,16 @@ class MyPlayer2(Player):
         
         le_moves.append(Direction.Drop)
         board.move(Direction.Drop) 
-        print(board.cells)
+        # print(board.cells)
         return le_moves
 
     def choose_action(self, board):
         self.print_board(board)
         time.sleep(0.002)
+        prev_holes = 0
+        curr_holes = 0
+        discards = 0
+        sandbox3 = board.clone()
         target_positions = []
         target_rotations = [1 ,2, 3, 4]
         actions_to_take = []
@@ -378,11 +385,18 @@ class MyPlayer2(Player):
                 temp_actions = self.move_to_target_pos(pos, rot, sandbox1)
                 if self.score_board(sandbox1) > highest_score:
                     highest_score = self.score_board(sandbox1)
+                    sandbox3 = sandbox1.clone()
                     actions_to_take = temp_actions
                 temp_actions = self.move_to_target_rot(rot, pos, sandbox2)
                 if self.score_board(sandbox2) > highest_score:
                     highest_score = self.score_board(sandbox2)
+                    sandbox3 = sandbox2.clone()
                     actions_to_take = temp_actions
+        # prev_holes = curr_holes
+        # curr_holes = self.count_holes(sandbox3)
+        # if ((prev_holes - curr_holes) < 0) and (discards<11):
+        #     actions_to_take = [Action.Discard]
+        #     discards+=1
         return actions_to_take
 
 SelectedPlayer = MyPlayer2
