@@ -238,14 +238,7 @@ class MyPlayer2(Player):
             n +=1
         return holes
 
-    def score_board(self, board):
-        score = 5000
-        bumpiness = 0
-        holes = 0
-        height = 0
-        horizontal_dislocations = 0
-
-        max_height = 25
+    def heights(self, board):
         heights = []
         for i in range(10):
             j = 24
@@ -254,26 +247,44 @@ class MyPlayer2(Player):
                     if cell[1]<j:
                         j = cell[1]   
             heights.append(j)
-        
-        holes = self.count_holes(board)
+        return heights
 
-        # for k in range(23, j+1, -1):
-        #     for i in range(9):
-        #         if (((i, k) in board.cells) and ((i +1, k) not in board.cells)) or (((i, k) not in board.cells) and ((i +1, k) in board.cells)):
-        #             horizontal_dislocations += 1
+    def max_height(self, board):
+        max_height = 25
         for cell in board.cells:
             if cell[1]<max_height:
                 max_height=cell[1]
-        height = 23 - max_height
+        return (23 - max_height)
+
+    def bumpiness(self, board):
+        heights = self.heights(board)
+        bumpiness = 0
         for i in range(9):    
             bumpiness += (abs(heights[i] - heights[i+1]))
-        if max_height<16:
-            score = score - ((holes*100) + (height*5) + (bumpiness*30) + (horizontal_dislocations*0))
+        return bumpiness
+
+    def cells_in_right_most_lane(self, board):
+        num = 0
+        for cell in board.cells:
+            if (cell[0] == 9):
+                num += 1
+        return num
+
+    def score_board(self, board):
+        score = 5000
+        bumpiness = self.bumpiness(board)
+        holes = self.count_holes(board)
+        max_height = self.max_height(board)
+        cells_in_right_lane = 0
+
+        if max_height>7:
+            score = score - ((holes*100) + (max_height*10) + (bumpiness*30) + (cells_in_right_lane*0))
         else:
-            score = score - ((holes*100) + (height*1) + (bumpiness*2) + (horizontal_dislocations*0))
-        print("Height:",height)
+            score = score - ((holes*100) + (max_height*1) + (bumpiness*2) + (cells_in_right_lane*0))
+        print("Height:",max_height)
         print("Bumpiness:",bumpiness)
         print("Holes:",holes)
+        print("Cells in right lane:", cells_in_right_lane)
         print("Score:",score,"\n")
         return score
     
@@ -395,7 +406,7 @@ class MyPlayer2(Player):
         if (discards < 10):    
             prev_holes = curr_holes
             curr_holes = self.count_holes(sandbox3)
-            if ((prev_holes - curr_holes) < 0):
+            if (((prev_holes - curr_holes) < 0) and (self.max_height(sandbox3)>16)):
                 discards+=1
                 actions_to_take = [Action.Discard]
         return actions_to_take
