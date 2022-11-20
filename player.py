@@ -1,7 +1,7 @@
 from board import Direction, Rotation, Action
 from random import Random
 import time
-
+discards = 0
 
 class Player:
     def choose_action(self, board):
@@ -267,10 +267,10 @@ class MyPlayer2(Player):
         height = 23 - max_height
         for i in range(9):    
             bumpiness += (abs(heights[i] - heights[i+1]))
-        if max_height<17:
-            score = score - ((holes*100) + (height*1) + (bumpiness*30) + (horizontal_dislocations*0))
+        if max_height<16:
+            score = score - ((holes*100) + (height*5) + (bumpiness*30) + (horizontal_dislocations*0))
         else:
-            score = score - ((holes*100) + (height*1) + (bumpiness*4) + (horizontal_dislocations*0))
+            score = score - ((holes*100) + (height*1) + (bumpiness*2) + (horizontal_dislocations*0))
         print("Height:",height)
         print("Bumpiness:",bumpiness)
         print("Holes:",holes)
@@ -360,11 +360,11 @@ class MyPlayer2(Player):
         return le_moves
 
     def choose_action(self, board):
+        global discards
         self.print_board(board)
         time.sleep(0.002)
         prev_holes = 0
         curr_holes = 0
-        discards = 0
         sandbox3 = board.clone()
         target_positions = []
         target_rotations = [1 ,2, 3, 4]
@@ -392,11 +392,12 @@ class MyPlayer2(Player):
                     highest_score = self.score_board(sandbox2)
                     sandbox3 = sandbox2.clone()
                     actions_to_take = temp_actions
-        # prev_holes = curr_holes
-        # curr_holes = self.count_holes(sandbox3)
-        # if ((prev_holes - curr_holes) < 0) and (discards<11):
-        #     actions_to_take = [Action.Discard]
-        #     discards+=1
+        if (discards < 10):    
+            prev_holes = curr_holes
+            curr_holes = self.count_holes(sandbox3)
+            if ((prev_holes - curr_holes) < 0):
+                discards+=1
+                actions_to_take = [Action.Discard]
         return actions_to_take
 
 SelectedPlayer = MyPlayer2
