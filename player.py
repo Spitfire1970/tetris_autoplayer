@@ -331,7 +331,7 @@ class MyPlayer2(Player):
             for cell in board.cells:
                 if cell[0] == i:
                     j = cell[1]
-                    if (((i ,j) not in board.cells) and ((i, j-1) not in board.cells) and ((i, j-2) not in board.cells) and ((i, j-3) not in board.cells) and ((((i-1, j) in board.cells) and ((i-1, j-1) in board.cells) and ((i-1, j-2) in board.cells) and ((i-1, j-3) in board.cells)) or (((i+1, j) in board.cells) and ((i+1, j-1) in board.cells) and ((i+1, j-2) in board.cells) and ((i+1, j-3) in board.cells)))):
+                    if (((i ,j) not in board.cells) and ((i, j-1) not in board.cells) and ((i, j-2) not in board.cells) and ((((i-1, j) in board.cells) and ((i-1, j-1) in board.cells) and ((i-1, j-2) in board.cells)) or (((i+1, j) in board.cells) and ((i+1, j-1) in board.cells) and ((i+1, j-2) in board.cells)))):
                         pillars+=1
                         break
         if pillars == 1:
@@ -352,13 +352,13 @@ class MyPlayer2(Player):
         cells_left = 240 - len(board.cells)
 
         if max_height>13 and cells_left < 120:
-            score = score - ((holes*70) + (max_height*10) + (bumpiness*60) + (cells_in_right_lane*0) + ((rows_cleared-4))*0 + (pillars)*50)
+            score = score - ((holes*70) + (max_height*10) + (bumpiness*60) + (cells_in_right_lane*0) + ((rows_cleared-4))*0 + (pillars)*150)
         # if max_height>5 and cells_left < 180:
         #     score = score - ((holes*120) + (max_height*15) + (bumpiness*25) + (cells_in_right_lane*10)+ ((rows_cleared-4))*10 + (pillars)*0)
         elif max_height>8 and cells_left < 170:
-            score = score - ((holes*110) + (max_height*15) + (bumpiness*25) + (cells_in_right_lane*0)+ ((rows_cleared-4))*10 + (pillars)*80)
+            score = score - ((holes*130) + (max_height*15) + (bumpiness*25) + (cells_in_right_lane*0)+ ((rows_cleared-4))*30 + (pillars)*150)
         else:
-            score = score - ((holes*140) + (max_height*1) + (bumpiness*0) + (cells_in_right_lane*0)+ ((rows_cleared-4))*50 + (pillars)*80)
+            score = score - ((holes*160) + (max_height*1) + (bumpiness*0) + (cells_in_right_lane*0)+ ((rows_cleared-4))*70 + (pillars)*150)
         if rows_cleared == 4:
             score =10000
         print("Height:",max_height)
