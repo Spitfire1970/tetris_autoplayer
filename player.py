@@ -362,7 +362,7 @@ class MyPlayer2(Player):
             pillars -=1
         return pillars
 
-    def blocks_pillar(self, board):
+    def blockades(self, board):
         return
 
     def score_board(self, board, prev_num_cell):
