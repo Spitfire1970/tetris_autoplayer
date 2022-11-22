@@ -380,7 +380,7 @@ class MyPlayer2(Player):
         # if max_height>5 and cells_left < 180:
         #     score = score - ((holes*120) + (max_height*15) + (bumpiness*25)+ ((rows_cleared-4))*10 + (pillars)*0)
         elif max_height>8 and cells_left < 160:
-            score = score - ((holes*140) + (max_height*10) + (bumpiness*45) + ((rows_cleared))*45 + (pillars)*110)
+            score = score - ((holes*142) + (max_height*10) + (bumpiness*45) + ((rows_cleared))*45 + (pillars)*110)
         else:
             score = score - ((holes*170) + (max_height*1) + (bumpiness*2) + ((rows_cleared))*80 + (pillars)*70)
         if rows_cleared == 4 or rows_cleared == 4.0:
