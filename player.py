@@ -352,14 +352,14 @@ class MyPlayer2(Player):
 
         cells_left = 240 - len(board.cells)
 
-        if max_height>13 and cells_left < 120:
-            score = score - ((holes*90) + (max_height*20) + (bumpiness*50) + ((rows_cleared))*0 + (pillars)*30)
+        if max_height>13 and cells_left < 105:
+            score = score - ((holes*105) + (max_height*30) + (bumpiness*70) + ((rows_cleared))*0 + (pillars)*25)
         # if max_height>5 and cells_left < 180:
         #     score = score - ((holes*120) + (max_height*15) + (bumpiness*25)+ ((rows_cleared-4))*10 + (pillars)*0)
-        elif max_height>8 and cells_left < 170:
-            score = score - ((holes*130) + (max_height*10) + (bumpiness*30) + ((rows_cleared))*0 + (pillars)*120)
+        elif max_height>8 and cells_left < 160:
+            score = score - ((holes*130) + (max_height*10) + (bumpiness*45) + ((rows_cleared))*0 + (pillars)*110)
         else:
-            score = score - ((holes*160) + (max_height*1) + (bumpiness*0) + ((rows_cleared))*60 + (pillars)*80)
+            score = score - ((holes*160) + (max_height*1) + (bumpiness*2) + ((rows_cleared))*60 + (pillars)*70)
         if rows_cleared == 4 or rows_cleared == 4.0:
             score =10000
         # print("Height:",max_height)
