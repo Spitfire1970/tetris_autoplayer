@@ -283,18 +283,25 @@ class MyPlayer2(Player):
 
     def count_holes(self, board):
         holes = 0
-        heights = self.heights(board)
-        n = 0
-        for i in heights:
-            j = 24
-            temp = 0
-            while (j != i):
-                if ((n, j - 1) in board.cells) and ((n, j) not in board.cells) and (j!=24):
-                    holes += (temp - j)
-                elif (((n, j) in board.cells) or (j==24)):
-                    temp = j
-                j -=1
-            n +=1
+        # heights = self.heights(board)
+        # n = 0
+        # for i in heights:
+        #     j = 24
+        #     temp = 0
+        #     while (j != i):
+        #         if ((n, j - 1) in board.cells) and ((n, j) not in board.cells) and (j!=24):
+        #             holes += (temp - j)
+        #         elif (((n, j) in board.cells) or (j==24)):
+        #             temp = j
+        #         j -=1
+        #     n +=1
+        for i in range(10):
+            for j in range(24):
+                if (i, j) not in board.cells:
+                    for s in range(0, j):
+                        if (i, s) in board.cells:
+                            holes += 1
+                            break
         return holes
 
     def max_height(self, board):
@@ -346,13 +353,13 @@ class MyPlayer2(Player):
         cells_left = 240 - len(board.cells)
 
         if max_height>13 and cells_left < 120:
-            score = score - ((holes*90) + (max_height*20) + (bumpiness*60) + ((rows_cleared))*10 + (pillars)*30)
+            score = score - ((holes*90) + (max_height*20) + (bumpiness*50) + ((rows_cleared))*0 + (pillars)*30)
         # if max_height>5 and cells_left < 180:
         #     score = score - ((holes*120) + (max_height*15) + (bumpiness*25)+ ((rows_cleared-4))*10 + (pillars)*0)
         elif max_height>8 and cells_left < 170:
-            score = score - ((holes*130) + (max_height*5) + (bumpiness*30) + ((rows_cleared))*20 + (pillars)*100)
+            score = score - ((holes*130) + (max_height*10) + (bumpiness*30) + ((rows_cleared))*0 + (pillars)*120)
         else:
-            score = score - ((holes*160) + (max_height*1) + (bumpiness*0) + ((rows_cleared))*40 + (pillars)*100)
+            score = score - ((holes*160) + (max_height*1) + (bumpiness*0) + ((rows_cleared))*60 + (pillars)*80)
         if rows_cleared == 4 or rows_cleared == 4.0:
             score =10000
         # print("Height:",max_height)
@@ -561,7 +568,7 @@ class MyPlayer2(Player):
         if (discards < 10):    
             prev_holes = curr_holes
             curr_holes = self.count_holes(sandbox3)
-            if (((prev_holes - curr_holes) < 0) and (self.max_height(sandbox3)>10)):
+            if ((prev_holes - curr_holes) < 0):
                 discards+=1
                 actions_to_take = [Action.Discard]
                 block_num -=1
