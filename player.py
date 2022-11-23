@@ -375,12 +375,18 @@ class MyPlayer2(Player):
 
         cells_left = 240 - len(board.cells)
 
-        if max_height>13 and cells_left < 105:
+        if max_height>20 and cells_left < 150:
+            score = score - ((holes*105) + (max_height*110) + (bumpiness*200) + ((rows_cleared))*0 + (pillars)*60)
+        elif max_height>19 and cells_left < 150:
+            score = score - ((holes*105) + (max_height*120) + (bumpiness*200) + ((rows_cleared))*0 + (pillars)*60)
+        elif max_height>16 and cells_left < 180:
+            score = score - ((holes*105) + (max_height*110) + (bumpiness*160) + ((rows_cleared))*0 + (pillars)*60)
+        elif max_height>13 and cells_left < 105:
             score = score - ((holes*115) + (max_height*70) + (bumpiness*90) + ((rows_cleared))*0 + (pillars)*60)
         # if max_height>5 and cells_left < 180:
         #     score = score - ((holes*120) + (max_height*15) + (bumpiness*25)+ ((rows_cleared-4))*10 + (pillars)*0)
         elif max_height>8 and cells_left < 130:
-            score = score - ((holes*140) + (max_height*10) + (bumpiness*45) + ((rows_cleared))*40 + (pillars)*140)
+            score = score - ((holes*150) + (max_height*10) + (bumpiness*45) + ((rows_cleared))*40 + (pillars)*140)
         else:
             score = score - ((holes*170) + (max_height*1) + (bumpiness*2) + ((rows_cleared))*80 + (pillars)*180)
         if rows_cleared == 4 or rows_cleared == 4.0:
