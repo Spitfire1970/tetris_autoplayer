@@ -376,13 +376,13 @@ class MyPlayer2(Player):
         cells_left = 240 - len(board.cells)
 
         if max_height>13 and cells_left < 105:
-            score = score - ((holes*115) + (max_height*30) + (bumpiness*75) + ((rows_cleared))*0 + (pillars)*25)
+            score = score - ((holes*115) + (max_height*70) + (bumpiness*90) + ((rows_cleared))*0 + (pillars)*60)
         # if max_height>5 and cells_left < 180:
         #     score = score - ((holes*120) + (max_height*15) + (bumpiness*25)+ ((rows_cleared-4))*10 + (pillars)*0)
-        elif max_height>8 and cells_left < 160:
-            score = score - ((holes*142) + (max_height*10) + (bumpiness*45) + ((rows_cleared))*45 + (pillars)*110)
+        elif max_height>8 and cells_left < 130:
+            score = score - ((holes*140) + (max_height*10) + (bumpiness*45) + ((rows_cleared))*40 + (pillars)*140)
         else:
-            score = score - ((holes*170) + (max_height*1) + (bumpiness*2) + ((rows_cleared))*80 + (pillars)*70)
+            score = score - ((holes*170) + (max_height*1) + (bumpiness*2) + ((rows_cleared))*80 + (pillars)*180)
         if rows_cleared == 4 or rows_cleared == 4.0:
             score =10000
         # print("Height:",max_height)
@@ -398,34 +398,52 @@ class MyPlayer2(Player):
         # li.append(board.falling.shape)
         # print(li)
         # print(board.falling.shape)
+        nah = [0, 0]
+        di = {0 : 0,
+            1 : 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0,
+            8: 0,
+            9: 0
+        }
         le_moves = []
         if board.falling.shape == "I":
             for i in range(9, -1, -1):
                 for j in range(21):
                     if (((i ,j) not in board.cells) and ((i, j-1) not in board.cells) and ((i, j-2) not in board.cells) and ((i, j-3) not in board.cells) and ((((i-1, j) in board.cells) and ((i-1, j-1) in board.cells) and ((i-1, j-2) in board.cells) and ((i-1, j-3) in board.cells)) or (((i+1, j) in board.cells) and ((i+1, j-1) in board.cells) and ((i+1, j-2) in board.cells) and ((i+1, j-3) in board.cells)))):
-                        for cell in board.falling.cells:
-                            k = cell[0]
-                            if k == i:
-                                while True:
-                                    le_moves.append(Direction.Down)
-                                    if board.move(Direction.Down):
-                                        return le_moves
-                            if k<i:
-                                while True:
-                                    le_moves.append(Direction.Right)
-                                    if board.move(Direction.Right):
-                                        return le_moves
-                                    k += 1
-                                    if k == i:
-                                        break
-                            if k > i:
-                                while True:
-                                    le_moves.append(Direction.Left)
-                                    if board.move(Direction.Left):
-                                        return le_moves
-                                    k -= 1
-                                    if k == i:
-                                        break
+                        di[i] += 1
+            for r in di:
+                if di[r] > nah[1]:
+                    nah[1] = di[r]
+                    nah[0] = r
+            if nah[1] != 0:
+                for cell in board.falling.cells:
+                    k = cell[0]
+                    if k == nah[0]:
+                        while True:
+                            le_moves.append(Direction.Down)
+                            if board.move(Direction.Down):
+                                return le_moves
+                    if k<nah[0]:
+                        while True:
+                            le_moves.append(Direction.Right)
+                            if board.move(Direction.Right):
+                                return le_moves
+                            k += 1
+                            if k == nah[0]:
+                                break
+                    if k > nah[0]:
+                        while True:
+                            le_moves.append(Direction.Left)
+                            if board.move(Direction.Left):
+                                return le_moves
+                            k -= 1
+                            if k == nah[0]:
+                                break
                                     
         l_block_start_pos = 10
         for cell in board.falling.cells:
@@ -472,34 +490,52 @@ class MyPlayer2(Player):
         # li.append(board.falling.shape)
         # print(li)
         # print(board.falling.shape)
+        nah = [0, 0]
+        di = {0 : 0,
+            1 : 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0,
+            8: 0,
+            9: 0
+        }
         le_moves = []
         if board.falling.shape == "I":
             for i in range(9, -1, -1):
                 for j in range(21):
                     if (((i ,j) not in board.cells) and ((i, j-1) not in board.cells) and ((i, j-2) not in board.cells) and ((i, j-3) not in board.cells) and ((((i-1, j) in board.cells) and ((i-1, j-1) in board.cells) and ((i-1, j-2) in board.cells) and ((i-1, j-3) in board.cells)) or (((i+1, j) in board.cells) and ((i+1, j-1) in board.cells) and ((i+1, j-2) in board.cells) and ((i+1, j-3) in board.cells)))):
-                        for cell in board.falling.cells:
-                            k = cell[0]
-                            if k == i:
-                                while True:
-                                    le_moves.append(Direction.Down)
-                                    if board.move(Direction.Down):
-                                        return le_moves
-                            if k<i:
-                                while True:
-                                    le_moves.append(Direction.Right)
-                                    if board.move(Direction.Right):
-                                        return le_moves
-                                    k += 1
-                                    if k == i:
-                                        break
-                            if k > i:
-                                while True:
-                                    le_moves.append(Direction.Left)
-                                    if board.move(Direction.Left):
-                                        return le_moves
-                                    k -= 1
-                                    if k == i:
-                                        break
+                        di[i] += 1
+            for r in di:
+                if di[r] > nah[1]:
+                    nah[1] = di[r]
+                    nah[0] = r
+            if nah[1] != 0:
+                for cell in board.falling.cells:
+                    k = cell[0]
+                    if k == nah[0]:
+                        while True:
+                            le_moves.append(Direction.Down)
+                            if board.move(Direction.Down):
+                                return le_moves
+                    if k<nah[0]:
+                        while True:
+                            le_moves.append(Direction.Right)
+                            if board.move(Direction.Right):
+                                return le_moves
+                            k += 1
+                            if k == nah[0]:
+                                break
+                    if k > nah[0]:
+                        while True:
+                            le_moves.append(Direction.Left)
+                            if board.move(Direction.Left):
+                                return le_moves
+                            k -= 1
+                            if k == nah[0]:
+                                break
         if target_rot != 1:
             for i in range(target_rot-1):
                 le_moves.append(Rotation.Clockwise)
