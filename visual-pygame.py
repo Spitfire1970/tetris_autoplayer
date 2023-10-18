@@ -63,7 +63,7 @@ def init_text(screen):
     img = font.render('DISCARDS', True, WHITE)
     txt.append((img, ((BOARD_WIDTH + 3)*CELL_WIDTH - img.get_rect().width//2, CELL_HEIGHT*12)))
 
-    scorefont = pygame.font.Font("Segment7-4Gml.otf", 40)
+    scorefont = pygame.font.Font("tetris/Segment7-4Gml.otf", 40)
 
 def render(screen, board):
     global scorefont, txt
